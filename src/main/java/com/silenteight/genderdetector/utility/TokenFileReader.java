@@ -1,5 +1,6 @@
 package com.silenteight.genderdetector.utility;
 
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
@@ -35,10 +36,13 @@ public class TokenFileReader {
         return foundedTokens;
     }
 
+    public InputStreamResource getAllTokensFromFile(String filePath) {
+        return new InputStreamResource(getFileFromResourcesAsInputStream(filePath));
+    }
+
     private InputStream getFileFromResourcesAsInputStream(String filePath) {
         return getClass()
                 .getClassLoader()
                 .getResourceAsStream(filePath);
     }
-
 }
