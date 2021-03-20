@@ -1,5 +1,8 @@
 package com.silenteight.genderdetector.controller.validator;
 
+import static com.silenteight.genderdetector.utility.ProjectConstants.DetectorOptions.ALL_TOKENS_DETECTOR_OPTION;
+import static com.silenteight.genderdetector.utility.ProjectConstants.DetectorOptions.FIRST_TOKEN_DETECTOR_OPTION;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -19,7 +22,7 @@ public class InputValidator {
     }
 
     private ValidationStatus validateDetectorOptionInput(String detectorOption) {
-        if (validateBaseInputProperties(detectorOption).equals(ValidationStatus.FAILED) || !(detectorOption.equals("SINGLE") || detectorOption.equals("ALL"))) {
+        if (validateBaseInputProperties(detectorOption).equals(ValidationStatus.FAILED) || !(detectorOption.equals(FIRST_TOKEN_DETECTOR_OPTION) || detectorOption.equals(ALL_TOKENS_DETECTOR_OPTION))) {
             return ValidationStatus.FAILED;
         }
         return ValidationStatus.PASSED;

@@ -1,5 +1,7 @@
 package com.silenteight.genderdetector.service;
 
+import static com.silenteight.genderdetector.utility.ProjectConstants.DetectorOptions.FIRST_TOKEN_DETECTOR_OPTION;
+
 import com.silenteight.genderdetector.algorithm.Gender;
 import com.silenteight.genderdetector.algorithm.GenderDetector;
 import com.silenteight.genderdetector.algorithm.TokensProvider;
@@ -23,7 +25,7 @@ public class GenderDetectorService {
 
     public Gender getDetectedGender(String userInput, String detectionOption) {
         List<String> nameTokens = Arrays.asList(userInput.split(" "));
-        if (detectionOption.equals("SINGLE")) {
+        if (detectionOption.equals(FIRST_TOKEN_DETECTOR_OPTION)) {
             String singleNameToken = nameTokens.get(FIRST_TOKEN);
             return genderDetector.detectGenderBasedOnSingleToken(singleNameToken);
         }

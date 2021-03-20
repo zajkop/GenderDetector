@@ -1,5 +1,8 @@
 package com.silenteight.genderdetector.algorithm;
 
+import static com.silenteight.genderdetector.utility.ProjectConstants.FilePaths.FEMALE_TOKEN_FILE_PATH;
+import static com.silenteight.genderdetector.utility.ProjectConstants.FilePaths.MALE_TOKEN_FILE_PATH;
+
 import com.silenteight.genderdetector.utility.TokenFileReader;
 import org.springframework.stereotype.Component;
 
@@ -8,8 +11,6 @@ import java.util.List;
 @Component
 public class GenderDetector {
 
-    private static final String MALE_TOKEN_FILE_PATH = "tokens/male-tokens.txt";
-    private static final String FEMALE_TOKEN_FILE_PATH = "tokens/female-tokens.txt";
     private final TokenFileReader fileReader;
 
     public GenderDetector(TokenFileReader fileReader) {
