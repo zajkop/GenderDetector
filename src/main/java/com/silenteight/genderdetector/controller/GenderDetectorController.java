@@ -59,7 +59,7 @@ public class GenderDetectorController {
     @GetMapping(value = "/all-genders-tokens", produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<byte[]> getAllTokensForEachGender()  {
         try {
-            return new ResponseEntity<>(tokensProviderService.getAllTokensForEachGender().readAllBytes(), HttpStatus.OK);
+            return new ResponseEntity<>(tokensProviderService.provideAllTokensForEachGender(), HttpStatus.OK);
         } catch (IOException e) {
             return new ResponseEntity<>("Unable to read tokens from service".getBytes(StandardCharsets.UTF_8), HttpStatus.INTERNAL_SERVER_ERROR);
         }

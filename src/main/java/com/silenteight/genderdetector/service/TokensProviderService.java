@@ -1,28 +1,28 @@
 package com.silenteight.genderdetector.service;
 
-import com.silenteight.genderdetector.algorithm.TokensProvider;
+import com.silenteight.genderdetector.utility.TokenFileReader;
 import org.springframework.stereotype.Service;
 
-import java.io.InputStream;
+import java.io.IOException;
 
 /**
- * TokensProvider service class
+ * Token provider service class
  */
 @Service
 public class TokensProviderService {
 
-    private final TokensProvider tokensProvider;
+    private final TokenFileReader tokenFileReader;
 
-    public TokensProviderService(TokensProvider tokensProvider) {
-        this.tokensProvider = tokensProvider;
+    public TokensProviderService(TokenFileReader tokenFileReader) {
+        this.tokenFileReader = tokenFileReader;
     }
 
     /**
-     * Gets all tokens for each gender using TokensProvider
+     * Provides all tokens for each gender using TokenFileReader class
      *
-     * @return InputStream with provided tokens
+     * @return available tokens as byte array
      */
-    public InputStream getAllTokensForEachGender() {
-        return tokensProvider.provideAllTokensForEachGender();
+    public byte[] provideAllTokensForEachGender() throws IOException {
+        return tokenFileReader.getTokensForEachGender().readAllBytes();
     }
 }
