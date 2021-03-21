@@ -13,7 +13,7 @@ import java.util.List;
  */
 class TokenFileReaderTest {
 
-    private static final String MALE_TOKENS_FILE = "tokens/male-test-tokens.txt";
+    private static final String MALE_TOKENS_FILE = "tokens/male-tokens.txt";
     private static final String MALE_NAME = "Patryk";
     private static final String FEMALE_NAME = "Martyna";
     private static TokenFileReader tokenFileReader;
