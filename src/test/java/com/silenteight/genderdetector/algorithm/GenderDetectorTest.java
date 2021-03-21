@@ -31,7 +31,7 @@ class GenderDetectorTest {
      * Verifies that detector returns male gender based on single token
      */
     @Test
-    void verifyThatDetectorReturnsMaleGenderBasedOnMaleSingleToken() {
+    public void verifyThatDetectorReturnsMaleGenderBasedOnMaleSingleToken() {
         Gender detectedGender = genderDetector.detectGenderBasedOnSingleToken(MALE_TOKEN);
         Assertions.assertThat(detectedGender)
                 .as("For given token %s should detect male gender", MALE_TOKEN)
@@ -42,7 +42,7 @@ class GenderDetectorTest {
      * Verifies that detector returns female gender based on single token
      */
     @Test
-    void verifyThatDetectorReturnsFemaleGenderBasedOnFemaleSingleToken() {
+    public void verifyThatDetectorReturnsFemaleGenderBasedOnFemaleSingleToken() {
         Gender detectedGender = genderDetector.detectGenderBasedOnSingleToken(FEMALE_TOKEN);
         Assertions.assertThat(detectedGender)
                 .as("For given token %s should detect female gender", FEMALE_TOKEN)
@@ -53,7 +53,7 @@ class GenderDetectorTest {
      * Verifies that detector returns inconclusive gender based on single token
      */
     @Test
-    void verifyThatDetectorReturnsInconclusiveGenderBasedOnUnknownSingleToken() {
+    public void verifyThatDetectorReturnsInconclusiveGenderBasedOnUnknownSingleToken() {
         Gender detectedGender = genderDetector.detectGenderBasedOnSingleToken(INCONCLUSIVE_TOKEN);
         Assertions.assertThat(detectedGender)
                 .as("For given token %s should detect inconclusive gender", INCONCLUSIVE_TOKEN)
@@ -61,7 +61,7 @@ class GenderDetectorTest {
     }
 
     @Test
-    void verifyThatDetectorReturnsMaleGenderBasedOnAllTokens() {
+    public void verifyThatDetectorReturnsMaleGenderBasedOnAllTokens() {
         List<String> inputTokens = List.of(MALE_TOKEN, FEMALE_TOKEN, SECOND_MALE_TOKEN);
         Gender detectedGender = genderDetector.detectGenderBasedOnAllTokens(inputTokens);
         Assertions.assertThat(detectedGender)
@@ -70,7 +70,7 @@ class GenderDetectorTest {
     }
 
     @Test
-    void verifyThatDetectorReturnsFemaleGenderBasedOnAllTokens() {
+    public void verifyThatDetectorReturnsFemaleGenderBasedOnAllTokens() {
         List<String> inputTokens = List.of(MALE_TOKEN, FEMALE_TOKEN, SECOND_FEMALE_TOKEN);
         Gender detectedGender = genderDetector.detectGenderBasedOnAllTokens(inputTokens);
         Assertions.assertThat(detectedGender)
@@ -79,7 +79,7 @@ class GenderDetectorTest {
     }
 
     @Test
-    void verifyThatDetectorReturnsInconclusiveGenderBasedOnAllTokens() {
+    public void verifyThatDetectorReturnsInconclusiveGenderBasedOnAllTokens() {
         List<String> inputTokens = List.of(MALE_TOKEN, FEMALE_TOKEN, INCONCLUSIVE_TOKEN);
         Gender detectedGender = genderDetector.detectGenderBasedOnAllTokens(inputTokens);
         Assertions.assertThat(detectedGender)
