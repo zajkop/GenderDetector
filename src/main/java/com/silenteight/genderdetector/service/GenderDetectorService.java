@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * GenderDetector service class
+ */
 @Service
 public class GenderDetectorService {
 
@@ -19,8 +22,14 @@ public class GenderDetectorService {
         this.genderDetector = genderDetector;
     }
 
-    public Gender getDetectedGender(String userInput, String detectionOption) {
-        List<String> nameTokens = Arrays.asList(userInput.split(" "));
+    /**
+     * Gets detected gender using GenderDetector based on given detection option
+     * @param nameInput       name tokens
+     * @param detectionOption detection option - ALL/SINGLE
+     * @return detected gender
+     */
+    public Gender getDetectedGender(String nameInput, String detectionOption) {
+        List<String> nameTokens = Arrays.asList(nameInput.split(" "));
         if (detectionOption.equals(FIRST_TOKEN_DETECTOR_OPTION)) {
             String singleNameToken = nameTokens.get(FIRST_TOKEN);
             return genderDetector.detectGenderBasedOnSingleToken(singleNameToken);

@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 
+/**
+ * TokensProvider service class
+ */
 @Service
 public class TokensProviderService {
 
@@ -14,6 +17,11 @@ public class TokensProviderService {
         this.tokensProvider = tokensProvider;
     }
 
+    /**
+     * Gets all tokens for each gender using TokensProvider
+     *
+     * @return InputStream with provided tokens
+     */
     public InputStream getAllTokensForEachGender() {
         return tokensProvider.provideAllTokensForEachGender();
     }

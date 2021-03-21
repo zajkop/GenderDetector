@@ -20,6 +20,18 @@ public class GenderDetector {
         this.fileReader = fileReader;
     }
 
+    /**
+     * Detects gender based on single name token by checking if token is in male or female tokens file
+     * If token is not found in both files INCONCLUSIVE gender is returned
+     *
+     * Examples:
+     * Token[Adam], Adam is present in male file - result MALE
+     * Token[Martyna], Martyna is present in female file - result FEMALE
+     * Token[Rokita], Rokita is not present in any file - result INCONCLUSIVE
+     *
+     * @param token name token
+     * @return detected gender
+     */
     public Gender detectGenderBasedOnSingleToken(String token) {
         if (fileReader.isTokenInSpecifiedFile(token, MALE_TOKEN_FILE_PATH)) {
             return Gender.MALE;
@@ -31,6 +43,19 @@ public class GenderDetector {
         return Gender.INCONCLUSIVE;
     }
 
+    /**
+     * Detects gender based on every name token
+     * To detect gender male or female tokens must be the majority in passed tokens
+     *
+     * Examples:
+     * Tokens[Adam, Martyna], tokens are present in files - result INCONCLUSIVE because male/female tokens don't have majority
+     * Tokens[Adam, Rokita], Adam is present in male file, but Rokita isn't - result INCONCLUSIVE because male tokens don't have majority
+     * Tokens[Martyna, Rokita], Martyna is present in female file, but Rokita isn't - result INCONCLUSIVE because female tokens don't have majority
+     * Tokens[Adam, Patryk, Martyna, Rokita], Adam and Patryk are present in male file, Martyna is in female file, Rokita isn't - result MALE because male tokens have majority
+     *
+     * @param tokens passed name tokens
+     * @return detected gender
+     */
     public Gender detectGenderBasedOnAllTokens(List<String> tokens) {
         int tokensHalfSize = tokens.size() / 2;
         List<String> maleTokens = fileReader.getCorrespondingTokensInSpecifiedFile(tokens, MALE_TOKEN_FILE_PATH);

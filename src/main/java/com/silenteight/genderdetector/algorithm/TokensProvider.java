@@ -5,6 +5,9 @@ import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
 
+/**
+ * Class provides tokens for each gender
+ */
 @Component
 public class TokensProvider {
 
@@ -14,6 +17,11 @@ public class TokensProvider {
         this.tokenFileReader = tokenFileReader;
     }
 
+    /**
+     * Provides all tokens for each gender using TokenFileReader class
+     *
+     * @return Tokens as InputStream
+     */
     public InputStream provideAllTokensForEachGender() {
         return tokenFileReader.getTokensForEachGender();
     }

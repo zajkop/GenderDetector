@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-@RestController()
+/**
+ * Controller class provides endpoints for detecting gender and retrieving all tokens for each gender
+ */
+@RestController("/gender")
 public class GenderDetectorController {
 
     private final GenderDetectorService genderDetectorService;
@@ -26,6 +29,14 @@ public class GenderDetectorController {
         this.tokensProviderService = tokensProviderService;
     }
 
+    /**
+     * Gets detected gender using based on input wth token names and detector option
+     * Before gender detection inputs are validated to meet the expectations
+     *
+     * @param name input with token names
+     * @param detectorOption detector options ALL, SINGLE
+     * @return detected gender
+     */
     @GetMapping("/detect-gender")
     public ResponseEntity<String> getDetectedGender(@RequestParam String name, @RequestParam(name = "option") String detectorOption) {
         ValidationStatus validationStatus = new GenderDetectorInputValidator()
@@ -39,6 +50,12 @@ public class GenderDetectorController {
         return new ResponseEntity<>(detectedGender.toString(), HttpStatus.OK);
     }
 
+    /**
+     * Gets all tokens for each gender using TokensProviderService
+     * In case of failure return ResponseEntity with specified message and status
+     *
+     * @return all tokens for each gender
+     */
     @GetMapping(value = "/all-genders-tokens", produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<byte[]> getAllTokensForEachGender()  {
         try {

@@ -6,6 +6,9 @@ import static com.silenteight.genderdetector.utility.ProjectConstants.DetectorOp
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class provides methods responsible for validating gender detector's inputs
+ */
 public class GenderDetectorInputValidator {
 
     private final List<ValidationStatus> validationResults;
@@ -14,19 +17,39 @@ public class GenderDetectorInputValidator {
         validationResults = new ArrayList<>();
     }
 
+    /**
+     * Validates name input by checking base input properties, status is added to validation results
+     *
+     * @param input name input
+     * @return GenderDetectorInputValidator instance
+     */
     public GenderDetectorInputValidator validateNameInput (String input) {
         validationResults.add(validateBaseInputProperties(input));
         return this;
     }
 
-    public GenderDetectorInputValidator validateDetectorOptionInput(String detectorOption) {
-        if (validateBaseInputProperties(detectorOption).equals(ValidationStatus.FAILED) || !(detectorOption.equals(FIRST_TOKEN_DETECTOR_OPTION) || detectorOption.equals(ALL_TOKENS_DETECTOR_OPTION))) {
+    /**
+     * Validates detector option input as it should pass base input validation and be equals to SINGLE or ALL
+     * Detector option validation status is added to validation results
+     *
+     * @param input detector option input
+     * @return GenderDetectorInputValidator instance
+     */
+    public GenderDetectorInputValidator validateDetectorOptionInput(String input) {
+        if (validateBaseInputProperties(input).equals(ValidationStatus.FAILED) || !(input.equals(FIRST_TOKEN_DETECTOR_OPTION) || input.equals(ALL_TOKENS_DETECTOR_OPTION))) {
             validationResults.add(ValidationStatus.FAILED);
         }
         validationResults.add(ValidationStatus.PASSED);
         return this;
     }
 
+    /**
+     * Validates input by checking if validation results contains FAILED status
+     * if it's input validation failed and validation status FAILED is returned
+     * otherwise validation passed and validation status PASSED is returned
+     *
+     * @return validation status
+     */
     public ValidationStatus validate() {
         if (validationResults.contains(ValidationStatus.FAILED)) {
             return ValidationStatus.FAILED;
@@ -34,6 +57,17 @@ public class GenderDetectorInputValidator {
         return ValidationStatus.PASSED;
     }
 
+    /**
+     * Validates base input properties:
+     * - empty input
+     * - blank input
+     * - contains only letters and spaces
+     * if validation fails return validation status FAILED
+     * otherwise return validation status PASSED
+     *
+     * @param input input
+     * @return validation status
+     */
     private ValidationStatus validateBaseInputProperties(String input) {
         if (input.isEmpty() || input.isBlank() || !input.matches("^[a-zA-Z_ ]*$")) {
             return ValidationStatus.FAILED;
