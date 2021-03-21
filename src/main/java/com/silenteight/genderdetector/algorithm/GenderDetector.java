@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * Class provides gender detection logic
+ */
 @Component
 public class GenderDetector {
 

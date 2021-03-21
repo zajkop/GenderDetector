@@ -1,10 +1,16 @@
 package com.silenteight.genderdetector.utility;
 
-import org.springframework.core.io.InputStreamResource;
+import static com.silenteight.genderdetector.utility.ProjectConstants.FilePaths.FEMALE_TOKEN_FILE_PATH;
+import static com.silenteight.genderdetector.utility.ProjectConstants.FilePaths.MALE_TOKEN_FILE_PATH;
+
+import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
+import java.io.SequenceInputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -36,8 +42,14 @@ public class TokenFileReader {
         return foundedTokens;
     }
 
-    public InputStreamResource getAllTokensFromFile(String filePath) {
-        return new InputStreamResource(getFileFromResourcesAsInputStream(filePath));
+    public InputStream getTokensForEachGender() {
+        List<InputStream> inputStreams = List.of(
+                IOUtils.toInputStream("=====Male tokens=====\n", StandardCharsets.UTF_8),
+                getFileFromResourcesAsInputStream(MALE_TOKEN_FILE_PATH),
+                IOUtils.toInputStream("\n=====Female tokens=====\n", StandardCharsets.UTF_8),
+                getFileFromResourcesAsInputStream(FEMALE_TOKEN_FILE_PATH)
+        );
+        return new SequenceInputStream(Collections.enumeration(inputStreams));
     }
 
     private InputStream getFileFromResourcesAsInputStream(String filePath) {
