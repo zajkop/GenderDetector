@@ -4,6 +4,8 @@ import static com.silenteight.genderdetector.utility.ProjectConstants.FilePaths.
 import static com.silenteight.genderdetector.utility.ProjectConstants.FilePaths.MALE_TOKEN_FILE_PATH;
 
 import com.silenteight.genderdetector.utility.TokenFileReader;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.List;
 @Component
 public class GenderDetector {
 
+    private static final Logger LOGGER = LogManager.getLogger(GenderDetector.class);
     private final TokenFileReader fileReader;
 
     public GenderDetector(TokenFileReader fileReader) {
@@ -34,12 +37,15 @@ public class GenderDetector {
      */
     public Gender detectGenderBasedOnSingleToken(String token) {
         if (fileReader.isTokenInSpecifiedFile(token, MALE_TOKEN_FILE_PATH)) {
+            LOGGER.debug(String.format("Token %s is in male tokens file", token));
             return Gender.MALE;
         } else {
             if (fileReader.isTokenInSpecifiedFile(token, FEMALE_TOKEN_FILE_PATH)) {
+                LOGGER.debug(String.format("Token %s is in female tokens file", token));
                 return Gender.FEMALE;
             }
         }
+        LOGGER.debug(String.format("Token %s is not present in any file, gender can't be detected", token));
         return Gender.INCONCLUSIVE;
     }
 
@@ -60,13 +66,16 @@ public class GenderDetector {
         int tokensHalfSize = tokens.size() / 2;
         List<String> maleTokens = fileReader.getCorrespondingTokensInSpecifiedFile(tokens, MALE_TOKEN_FILE_PATH);
         if (maleTokens.size() > tokensHalfSize) {
+            LOGGER.debug("Male tokens are the majority tokens, MALE gender detected");
             return Gender.MALE;
         } else {
             List<String> femaleTokens = fileReader.getCorrespondingTokensInSpecifiedFile(tokens, FEMALE_TOKEN_FILE_PATH);
             if (femaleTokens.size() > tokensHalfSize) {
+                LOGGER.debug("Female tokens are the majority tokens, FEMALE gender detected");
                 return Gender.FEMALE;
             }
         }
+        LOGGER.debug("Gender can't be detected based on given tokens:" + tokens);
         return Gender.INCONCLUSIVE;
     }
 }

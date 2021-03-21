@@ -3,6 +3,9 @@ package com.silenteight.genderdetector.controller.validator;
 import static com.silenteight.genderdetector.utility.ProjectConstants.DetectorOptions.ALL_TOKENS_DETECTOR_OPTION;
 import static com.silenteight.genderdetector.utility.ProjectConstants.DetectorOptions.FIRST_TOKEN_DETECTOR_OPTION;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +14,7 @@ import java.util.List;
  */
 public class GenderDetectorInputValidator {
 
+    private static final Logger LOGGER = LogManager.getLogger(GenderDetectorInputValidator.class);
     private final List<ValidationStatus> validationResults;
 
     public GenderDetectorInputValidator() {
@@ -37,6 +41,7 @@ public class GenderDetectorInputValidator {
      */
     public GenderDetectorInputValidator validateDetectorOptionInput(String input) {
         if (validateBaseInputProperties(input).equals(ValidationStatus.FAILED) || !(input.equals(FIRST_TOKEN_DETECTOR_OPTION) || input.equals(ALL_TOKENS_DETECTOR_OPTION))) {
+            LOGGER.error("Detector option input validation fails for input: " + input);
             validationResults.add(ValidationStatus.FAILED);
         }
         validationResults.add(ValidationStatus.PASSED);
@@ -52,6 +57,7 @@ public class GenderDetectorInputValidator {
      */
     public ValidationStatus validate() {
         if (validationResults.contains(ValidationStatus.FAILED)) {
+            LOGGER.error("Validation results contains FAILED validation status, input validation fails");
             return ValidationStatus.FAILED;
         }
         return ValidationStatus.PASSED;
@@ -70,6 +76,7 @@ public class GenderDetectorInputValidator {
      */
     private ValidationStatus validateBaseInputProperties(String input) {
         if (input.isEmpty() || input.isBlank() || !input.matches("^[a-zA-Z_ ]*$")) {
+            LOGGER.error("Base input validation fails for input: " + input);
             return ValidationStatus.FAILED;
         }
         return ValidationStatus.PASSED;

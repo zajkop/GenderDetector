@@ -5,6 +5,8 @@ import com.silenteight.genderdetector.controller.validator.GenderDetectorInputVa
 import com.silenteight.genderdetector.controller.validator.ValidationStatus;
 import com.silenteight.genderdetector.service.GenderDetectorService;
 import com.silenteight.genderdetector.service.TokensProviderService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +20,10 @@ import java.nio.charset.StandardCharsets;
 /**
  * Controller class provides endpoints for detecting gender and retrieving all tokens for each gender
  */
-@RestController("/gender")
+@RestController
 public class GenderDetectorController {
 
+    private static final Logger LOGGER = LogManager.getLogger(GenderDetectorController.class);
     private final GenderDetectorService genderDetectorService;
     private final TokensProviderService tokensProviderService;
 
@@ -61,6 +64,7 @@ public class GenderDetectorController {
         try {
             return new ResponseEntity<>(tokensProviderService.provideAllTokensForEachGender(), HttpStatus.OK);
         } catch (IOException e) {
+            LOGGER.error("Reading all tokens operation failed ", e);
             return new ResponseEntity<>("Unable to read tokens from service".getBytes(StandardCharsets.UTF_8), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

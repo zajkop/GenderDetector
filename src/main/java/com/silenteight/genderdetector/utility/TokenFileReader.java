@@ -4,6 +4,8 @@ import static com.silenteight.genderdetector.utility.ProjectConstants.FilePaths.
 import static com.silenteight.genderdetector.utility.ProjectConstants.FilePaths.MALE_TOKEN_FILE_PATH;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
@@ -20,6 +22,7 @@ import java.util.Scanner;
 @Component
 public class TokenFileReader {
 
+    private static final Logger LOGGER = LogManager.getLogger(TokenFileReader.class);
     /**
      * Method looks for name token in specified file
      *
@@ -36,6 +39,7 @@ public class TokenFileReader {
             }
         }
         scanner.close();
+        LOGGER.debug(String.format("Token %s not found in file: %s", token, filePath));
         return false;
     }
 
@@ -56,6 +60,9 @@ public class TokenFileReader {
             }
         }
         scanner.close();
+        if (foundedTokens.isEmpty()) {
+            LOGGER.debug("Tokens: " + tokens + " not found in file: " + filePath);
+        }
         return foundedTokens;
     }
 
